@@ -6,6 +6,8 @@
 package com.or.weather.api;
 
 import java.math.BigDecimal;
+
+import com.or.weather.exception.NoDataException;
 import com.or.weather.model.Location;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-06-09T13:14:10.799+03:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-06-09T17:34:52.779+03:00")
 
 @Validated
 @Api(value = "temperature", description = "the temperature API")
@@ -35,6 +37,6 @@ public interface TemperatureApi {
         @ApiResponse(code = 400, message = "Invalid Location") })
     @RequestMapping(value = "/temperature",
         method = RequestMethod.POST)
-    ResponseEntity<BigDecimal> temperaturePost(@ApiParam(value = "Location parameter based on longitude and latitude." ,required=true )  @Valid @RequestBody Location location);
+    ResponseEntity<BigDecimal> temperaturePost(@ApiParam(value = "Location parameter based on longitude and latitude." ,required=true )  @Valid @RequestBody Location location) throws NoDataException;
 
 }
