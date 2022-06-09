@@ -1,5 +1,6 @@
 package io.swagger;
 
+import com.or.weather.db.repository.ForecastRepository;
 import io.swagger.configuration.LocalDateConverter;
 import io.swagger.configuration.LocalDateTimeConverter;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan(basePackages = { "io.swagger", "com.or.weather.api" , "io.swagger.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
+
+    private ForecastRepository repository;
 
     @Override
     public void run(String... arg0) throws Exception {
