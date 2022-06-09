@@ -4,7 +4,7 @@ info:
   description: API to get info about weather based on given location.
   version: 1.0.0
   
-host: api.Weather.mashov
+host: localhost:8080
 
 paths:
   /temperature:
@@ -99,17 +99,23 @@ definitions:
         description: The chance of rain today in percent
         type: number
         format: double
-        
+
+
   ForecastDay:
     type: object
     properties:
+      location: 
+        $ref: '#/definitions/Location'
       windAndRain:
         $ref: '#/definitions/WindAndRain'
       temperature:
         $ref: '#/definitions/Temperature'
       weatherState:
         $ref: '#/definitions/WeatherState'
-          
+      date:
+        type: string
+        format: date
+
   WeeklyForecast:
     type: array
     items:
