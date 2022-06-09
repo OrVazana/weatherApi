@@ -1,0 +1,122 @@
+swagger: "2.0"
+info: 
+  title: Weather API
+  description: API to get info about weather based on given location.
+  version: 1.0.0
+  
+host: api.Weather.mashov
+
+paths:
+  /temperature:
+    post:
+      summary: get current temperature of given location.
+      tags: 
+        - Weather
+      parameters:
+        - in: body
+          name: location
+          description: Location parameter based on longitude and latitude.
+          required: true
+          schema:
+            $ref: '#/definitions/Location'
+      responses:
+        '200':
+          description: current temperature of given location
+          schema:
+            $ref: '#/definitions/Temperature'
+        '400':
+          description: "Invalid Location"
+
+  /windAndRain:
+    post:
+      summary: Returns wind speed and Chance of rain in percent by location.
+      tags: 
+        - Weather
+      parameters:
+        - in: body
+          name: location
+          description: Location parameter based on longitude and latitude.
+          required: true
+          schema:
+            $ref: '#/definitions/Location'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WindAndRain'
+        '400':
+          description: "Invalid Location"
+
+  /forecast:
+    post:
+      summary: Returns the forecast for the next 5 days for the given location
+      tags: 
+        - Weather
+      parameters:
+        - in: body
+          name: location
+          description: Location parameter based on longitude and latitude.
+          required: true
+          schema:
+            $ref: '#/definitions/Location'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WeeklyForecast'
+        '400':
+          description: "Invalid Location"
+            
+definitions:
+  Location:
+    type: object
+    required: 
+      - longitude
+      - latitude
+    properties:
+      longitude:
+        description: Longitude component of location.
+        type: number
+        format: double
+      latitude:
+        description: Latitude component of location.
+        type: number
+        format: double
+
+  Temperature:
+    description: The temperature in Celsius degrees 
+    type: number
+    format: double
+ 
+  WindAndRain:
+    type: object
+    properties:
+      windSpeed:
+        description: Speed of wind in kph
+        type: number
+        format: double
+      rainPercent:
+        description: The chance of rain today in percent
+        type: number
+        format: double
+        
+  ForecastDay:
+    type: object
+    properties:
+      windAndRain:
+        $ref: '#/definitions/WindAndRain'
+      temperature:
+        $ref: '#/definitions/Temperature'
+      weatherState:
+        $ref: '#/definitions/WeatherState'
+          
+  WeeklyForecast:
+    type: array
+    items:
+        $ref: '#/definitions/ForecastDay'
+  
+  WeatherState:
+    type: string
+    enum: &WEATHERSTATE [Sunny, cloudy, rainy]
+    
+ 
